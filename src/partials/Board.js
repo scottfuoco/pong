@@ -18,8 +18,8 @@ export default class Board {
 		context.lineWidth = 5;
 
 		context.beginPath();
-		context.moveTo(this.width/2 - 5, 0);
-		context.lineTo(this.width/2 - 5, this.height);
+		context.moveTo(this.width/2, 0);
+		context.lineTo(this.width/2, this.height);
 		context.stroke();
 	}
     

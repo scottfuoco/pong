@@ -7,3 +7,7 @@ export const player2Keys = {
     up: 38,
     down: 40
 }
+
+export const gameKeys = {
+    reset:32
+}
