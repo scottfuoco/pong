@@ -71,11 +71,12 @@ h1 {
 }
 
 #game {
+   background-color: black;
    background-size: cover;
    display: block;
-   height: 256px;
+   height: 80%;
    margin: 20px auto;
-   width: 512px;
+   width: 80%;
 }
 .players {
    display: inline-flex;
