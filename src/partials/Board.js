@@ -3,14 +3,12 @@ export default class Board {
         this.height = height;
         this.width = width;
         this.color = color;
+        document.getElementById('game').style.backgroundImage = 'url(http://localhost:3000/assets/images/background-1.png)';
     }
         
     drawBoard (context) {
-		context.fillStyle = this.color;
-		context.fillRect(0, 0,
-						this.width,
-						this.height);
-	}
+        context.clearRect(0, 0, this.width, this.height);
+    }
 	
 	drawLine (context) {
 		context.setLineDash([20, 10]);

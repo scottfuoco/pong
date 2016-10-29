@@ -8,20 +8,27 @@ export default class Paddle {
         this.keys = keys;
         this.speed = 5;
         this.score = 0;
-        document.addEventListener('keydown', event => this.keyListener(event, boardHeight));
+        this.map = {};
+        document.addEventListener('keydown', event => this.keyDownListener(event, boardHeight));
+        document.addEventListener('keyup', event => this.keyDownListener(event, boardHeight));
+//        document.addEventListener('keyup', event => this.keyUpListener(event));
+    }   
+
+    keyDownListener(e, boardHeight) {
+        e = e || event; // to deal with IE
+        this.map[e.keyCode] = e.type == 'keydown';
+      
+        if (this.map[this.keys.up]){
+            this.moveUp();
+        }  
+        if (this.map[this.keys.down]){
+            this.moveDown(boardHeight);
+        }   
     }
     
-    keyListener(event, boardHeight) {
-        switch(event.keyCode){
-            case this.keys.up:
-               this.moveUp();
-               break;
-            case this.keys.down:
-                this.moveDown(boardHeight);
-                break;
-            default:
-                return;
-        }
+    keyUpListener(e){
+        e = e || event; // to deal with IE
+        delete this.map[e.keyCode];
     }
     
     moveUp(){

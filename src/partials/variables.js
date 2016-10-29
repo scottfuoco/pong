@@ -13,3 +13,7 @@ export const paddleVariables = {
 export const scoreboardVariables = {
     color: 'white;'
 }
+
+export const gameVariables = {
+    pointsToWin: 10
+}

@@ -64,12 +64,14 @@ body {
    font-family: 'PressStart2P Web', monospace;
    margin: 0 auto;
    text-align: center;
+
 }
 h1 {
    margin-top: 20px;
 }
+
 #game {
-   background-color:blue;
+   background-size: cover;
    display: block;
    height: 256px;
    margin: 20px auto;
