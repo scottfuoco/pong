@@ -1,7 +1,7 @@
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-  entry: ['./src/index.js'],
+  entry: ['webpack-dev-server/client?http://localhost:3000', './src/index.js'],
   devServer: {
     inline: true,
     host: 'localhost',
