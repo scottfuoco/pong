@@ -18,30 +18,23 @@ export default class Game {
         this.keys = gameKeys;
 
         this.board = new Board(this.height, this.width, boardVariables.backgrounds);
-        this.board.setBackground(id, 0);
+        this.board.setBackground(id, 3);
 
-        this.p1 = new Paddle(this.height, paddleVariables.distFromEdge, 'white', 'red', player1Keys);
-        this.p2 = new Paddle(this.height, this.width - paddleVariables.distFromEdge, 'white', 'blue', player2Keys);
+        this.playerArray = [];
+        this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, 'white', 'red', player1Keys));
+        this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, 'white', 'blue', player2Keys));
 
         this.ballArray = [];
         this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
         this.scoreboard = new Scoreboard(10, this.width / 2, '#FF0');
 
-        document.addEventListener('keydown', event => this.keyListener(event));
+        document.addEventListener('keydown', ev => { return this.keyListener(ev, ev.keyCode, true); }, false);
+        document.addEventListener('keyup', ev => { return this.keyListener(ev, ev.keyCode, false); }, false);
+
     }
 
-    resetGame() {
-        this.gameOver = false;
-        this.p1.playerReset(this.height);
-        this.p2.playerReset(this.height);
-
-        for (let ball of this.ballArray) {
-            ball.ballReset(this.height, this.width);
-        }
-    }
-
-    keyListener(event) {
-        switch (event.keyCode) {
+    keyListener(ev, key, pressed) {
+        switch (key) {
             case this.keys.reset:
                 if (this.gameOver) {
                     this.resetGame();
@@ -50,15 +43,32 @@ export default class Game {
                     this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
                 }
                 break;
-            default:
-                return;
+        }
+
+        for (let player of this.playerArray) {
+            if (player.keys.up === key) {
+                player.input.up = pressed;
+            }
+            else if (player.keys.down === key) {
+                player.input.down = pressed;
+            }
+        }
+    }
+
+    resetGame() {
+        this.gameOver = false;
+        this.playerArray[0].playerReset(this.height);
+        this.playerArray[1].playerReset(this.height);
+
+        for (let ball of this.ballArray) {
+            ball.ballReset(this.height, this.width);
         }
     }
 
     update() {
-        if (this.p1.score >= gameVariables.pointsToWin || this.p2.score >= gameVariables.pointsToWin) {
+        if (this.playerArray[0].score >= gameVariables.pointsToWin || this.playerArray[1].score >= gameVariables.pointsToWin) {
             let winner = '';
-            if (this.p1.score >= gameVariables.pointsToWin) {
+            if (this.playerArray[0].score >= gameVariables.pointsToWin) {
                 winner = 'P1';
             } else {
                 winner = 'P2';
@@ -69,19 +79,21 @@ export default class Game {
         }
 
         for (let ball of this.ballArray) {
-            ball.update(this.height, this.width, this.p1, this.p2);
+            ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
         }
+        this.playerArray[0].update(this.height);
+        this.playerArray[1].update(this.height);
     }
 
     render() {
         if (!this.gameOver) {
             this.board.render(this.context);
-            this.p1.render(this.context);
-            this.p2.render(this.context);
+            this.playerArray[0].render(this.context);
+            this.playerArray[1].render(this.context);
             for (let ball of this.ballArray) {
                 ball.render(this.context);
             }
-            this.scoreboard.render(this.context, this.p1, this.p2);
+            this.scoreboard.render(this.context, this.playerArray[0], this.playerArray[1]);
         }
     }
 }

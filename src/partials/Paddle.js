@@ -9,27 +9,8 @@ export default class Paddle {
         this.speed = 5;
         this.score = 0;
         this.kiColor = kiColor;
-        this.map = {};
-        document.addEventListener('keydown', event => this.keyDownListener(event, boardHeight));
-        document.addEventListener('keyup', event => this.keyDownListener(event, boardHeight));
-        //        document.addEventListener('keyup', event => this.keyUpListener(event));
-    }
-
-    keyDownListener(e, boardHeight) {
-        e = e || event; // to deal with IE
-        this.map[e.keyCode] = e.type == 'keydown';
-
-        if (this.map[this.keys.up]) {
-            this.moveUp();
-        }
-        if (this.map[this.keys.down]) {
-            this.moveDown(boardHeight);
-        }
-    }
-
-    keyUpListener(e) {
-        e = e || event; // to deal with IE
-        delete this.map[e.keyCode];
+        this.keys = keys;
+        this.input = { up: false, down: false };
     }
 
     moveUp() {
@@ -49,7 +30,14 @@ export default class Paddle {
         this.score = 0;
     }
 
-
+    update(boardHeight) {
+        if (this.input.up) {
+            this.moveUp();
+        }
+        if (this.input.down) {
+            this.moveDown(boardHeight);
+        }
+    }
     render(context) {
         context.fillStyle = this.color;
         context.fillRect(this.x, this.y,
