@@ -3,13 +3,10 @@ export default class Board {
         this.height = height;
         this.width = width;
         this.backgrounds = backgrounds;
-
-
     }
 
     setBackground(id, bgIndex) {
-        document.getElementById('game').style.backgroundImage = `url(http://localhost:3000/${this.backgrounds[bgIndex]}`;
-        console.log(this.backgrounds[bgIndex]);
+        document.getElementById(id).style.backgroundImage = `url(${this.backgrounds[bgIndex]}`;
     }
 
     clearBoard(context) {

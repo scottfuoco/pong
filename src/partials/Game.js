@@ -4,7 +4,7 @@ import Ball from './Ball';
 import Scoreboard from './Scoreboard';
 
 import { player1Keys, player2Keys, gameKeys } from './keys';
-import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables } from './variables';
+import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables } from './variables';
 
 
 export default class Game {
@@ -21,8 +21,9 @@ export default class Game {
         this.board.setBackground(id, 3);
 
         this.playerArray = [];
-        this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, 'white', 'red', player1Keys));
-        this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, 'white', 'blue', player2Keys));
+        this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, 'white', 'red', player1Keys, characterVariables.pongku));
+
+        this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, 'white', 'blue', player2Keys, characterVariables.pongolo));
 
         this.ballArray = [];
         this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
@@ -31,20 +32,24 @@ export default class Game {
         document.addEventListener('keydown', ev => { return this.keyListener(ev, ev.keyCode, true); }, false);
         document.addEventListener('keyup', ev => { return this.keyListener(ev, ev.keyCode, false); }, false);
 
+        this.previousKeys = {};
+
+
     }
 
     keyListener(ev, key, pressed) {
-        switch (key) {
-            case this.keys.reset:
-                if (this.gameOver) {
-                    this.resetGame();
-                }
-                else {
-                    this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
-                }
-                break;
+        if (this.keys.reset === key) {
+            if (this.gameOver) {
+                this.resetGame();
+            }
+            else if (!this.previousKeys[key]) {
+                this.spawnBall();
+            }
         }
 
+        // run through all players and check if one of their event keys was pressed
+        // if it was set that input on that player to true.
+        // the action will be called in the update() for that player/
         for (let player of this.playerArray) {
             if (player.keys.up === key) {
                 player.input.up = pressed;
@@ -53,6 +58,7 @@ export default class Game {
                 player.input.down = pressed;
             }
         }
+        this.previousKeys[key] = pressed;
     }
 
     resetGame() {
@@ -63,6 +69,10 @@ export default class Game {
         for (let ball of this.ballArray) {
             ball.ballReset(this.height, this.width);
         }
+    }
+
+    spawnBall() {
+        this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
     }
 
     update() {

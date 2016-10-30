@@ -4,9 +4,10 @@ export default class Ball {
         this.x = x;
         this.vx = Math.random() < 0.5 ? -1 : 1;
         this.vy = Math.random() < 0.5 ? -.25 : .25;
+        this.speed = speed;
         this.radius = radius;
         this.color = color;
-        this.speed = speed;
+
     }
 
     playerScore(player) {

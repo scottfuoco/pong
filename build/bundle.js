@@ -7811,7 +7811,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(79) + ");\n    src: url(" + __webpack_require__(79) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(80) + ") format('woff2'),\n         url(" + __webpack_require__(81) + ") format('woff'),\n         url(" + __webpack_require__(82) + ") format('truetype'),\n         url(" + __webpack_require__(83) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n\n}\nh1 {\n   margin-top: 20px;\n}\n\n#game {\n   background-size: cover;\n   display: block;\n   height: 256px;\n   margin: 20px auto;\n   width: 512px;\n}\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 512px;\n}\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(79) + ");\n    src: url(" + __webpack_require__(79) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(80) + ") format('woff2'),\n         url(" + __webpack_require__(81) + ") format('woff'),\n         url(" + __webpack_require__(82) + ") format('truetype'),\n         url(" + __webpack_require__(83) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n\n}\nh1 {\n   margin-top: 20px;\n}\n\n#game {\n   background-color: black;\n   background-size: cover;\n   display: block;\n   height: 80%;\n   margin: 20px auto;\n   width: 80%;\n}\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 512px;\n}\n", ""]);
 
 	// exports
 
@@ -8204,35 +8204,55 @@
 
 	        this.keys = _keys.gameKeys;
 
-	        this.board = new _Board2.default(this.height, this.width, 'black');
-	        this.p1 = new _Paddle2.default(this.height, _variables.paddleVariables.distFromEdge, 'white', _keys.player1Keys);
-	        this.p2 = new _Paddle2.default(this.height, this.width - _variables.paddleVariables.distFromEdge, 'white', _keys.player2Keys);
+	        this.board = new _Board2.default(this.height, this.width, _variables.boardVariables.backgrounds);
+	        this.board.setBackground(id, 3);
+
+	        this.playerArray = [];
+	        this.playerArray.push(new _Paddle2.default(this.height, _variables.paddleVariables.distFromEdge, 'white', 'red', _keys.player1Keys, _variables.characterVariables.pongku));
+
+	        this.playerArray.push(new _Paddle2.default(this.height, this.width - _variables.paddleVariables.distFromEdge, 'white', 'blue', _keys.player2Keys, _variables.characterVariables.pongolo));
 
 	        this.ballArray = [];
 	        this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color));
 	        this.scoreboard = new _Scoreboard2.default(10, this.width / 2, '#FF0');
 
-	        document.addEventListener('keydown', function (event) {
-	            return _this.keyListener(event);
-	        });
+	        document.addEventListener('keydown', function (ev) {
+	            return _this.keyListener(ev, ev.keyCode, true);
+	        }, false);
+	        document.addEventListener('keyup', function (ev) {
+	            return _this.keyListener(ev, ev.keyCode, false);
+	        }, false);
+
+	        this.previousKeys = {};
 	    }
 
 	    _createClass(Game, [{
-	        key: 'resetGame',
-	        value: function resetGame() {
-	            this.gameOver = false;
-	            this.p1.playerReset(this.height);
-	            this.p2.playerReset(this.height);
+	        key: 'keyListener',
+	        value: function keyListener(ev, key, pressed) {
+	            if (this.keys.reset === key) {
+	                if (this.gameOver) {
+	                    this.resetGame();
+	                } else if (!this.previousKeys[key]) {
+	                    this.spawnBall();
+	                }
+	            }
 
+	            // run through all players and check if one of their event keys was pressed
+	            // if it was set that input on that player to true.
+	            // the action will be called in the update() for that player/
 	            var _iteratorNormalCompletion = true;
 	            var _didIteratorError = false;
 	            var _iteratorError = undefined;
 
 	            try {
-	                for (var _iterator = this.ballArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var ball = _step.value;
+	                for (var _iterator = this.playerArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var player = _step.value;
 
-	                    ball.ballReset(this.height, this.width);
+	                    if (player.keys.up === key) {
+	                        player.input.up = pressed;
+	                    } else if (player.keys.down === key) {
+	                        player.input.down = pressed;
+	                    }
 	                }
 	            } catch (err) {
 	                _didIteratorError = true;
@@ -8248,36 +8268,15 @@
 	                    }
 	                }
 	            }
+
+	            this.previousKeys[key] = pressed;
 	        }
 	    }, {
-	        key: 'keyListener',
-	        value: function keyListener(event) {
-	            switch (event.keyCode) {
-	                case this.keys.reset:
-	                    if (this.gameOver) {
-	                        this.resetGame();
-	                    } else {
-	                        this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color));
-	                    }
-	                    break;
-	                default:
-	                    return;
-	            }
-	        }
-	    }, {
-	        key: 'update',
-	        value: function update() {
-	            if (this.p1.score >= _variables.gameVariables.pointsToWin || this.p2.score >= _variables.gameVariables.pointsToWin) {
-	                var winner = '';
-	                if (this.p1.score >= _variables.gameVariables.pointsToWin) {
-	                    winner = 'P1';
-	                } else {
-	                    winner = 'P2';
-	                }
-	                this.board.render(this.context);
-	                this.scoreboard.printText(this.context, 'Game Over: ' + winner + ' wins!');
-	                this.gameOver = true;
-	            }
+	        key: 'resetGame',
+	        value: function resetGame() {
+	            this.gameOver = false;
+	            this.playerArray[0].playerReset(this.height);
+	            this.playerArray[1].playerReset(this.height);
 
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
@@ -8287,7 +8286,7 @@
 	                for (var _iterator2 = this.ballArray[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                    var ball = _step2.value;
 
-	                    ball.update(this.height, this.width, this.p1, this.p2);
+	                    ball.ballReset(this.height, this.width);
 	                }
 	            } catch (err) {
 	                _didIteratorError2 = true;
@@ -8305,38 +8304,86 @@
 	            }
 	        }
 	    }, {
+	        key: 'spawnBall',
+	        value: function spawnBall() {
+	            this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color));
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update() {
+	            if (this.playerArray[0].score >= _variables.gameVariables.pointsToWin || this.playerArray[1].score >= _variables.gameVariables.pointsToWin) {
+	                var winner = '';
+	                if (this.playerArray[0].score >= _variables.gameVariables.pointsToWin) {
+	                    winner = 'P1';
+	                } else {
+	                    winner = 'P2';
+	                }
+	                this.board.render(this.context);
+	                this.scoreboard.printText(this.context, 'Game Over: ' + winner + ' wins!');
+	                this.gameOver = true;
+	            }
+
+	            var _iteratorNormalCompletion3 = true;
+	            var _didIteratorError3 = false;
+	            var _iteratorError3 = undefined;
+
+	            try {
+	                for (var _iterator3 = this.ballArray[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                    var ball = _step3.value;
+
+	                    ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
+	                }
+	            } catch (err) {
+	                _didIteratorError3 = true;
+	                _iteratorError3 = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                        _iterator3.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError3) {
+	                        throw _iteratorError3;
+	                    }
+	                }
+	            }
+
+	            this.playerArray[0].update(this.height);
+	            this.playerArray[1].update(this.height);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            if (!this.gameOver) {
 	                this.board.render(this.context);
-	                this.p1.render(this.context);
-	                this.p2.render(this.context);
-	                var _iteratorNormalCompletion3 = true;
-	                var _didIteratorError3 = false;
-	                var _iteratorError3 = undefined;
+	                this.playerArray[0].render(this.context);
+	                this.playerArray[1].render(this.context);
+	                var _iteratorNormalCompletion4 = true;
+	                var _didIteratorError4 = false;
+	                var _iteratorError4 = undefined;
 
 	                try {
-	                    for (var _iterator3 = this.ballArray[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                        var ball = _step3.value;
+	                    for (var _iterator4 = this.ballArray[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	                        var ball = _step4.value;
 
 	                        ball.render(this.context);
 	                    }
 	                } catch (err) {
-	                    _didIteratorError3 = true;
-	                    _iteratorError3 = err;
+	                    _didIteratorError4 = true;
+	                    _iteratorError4 = err;
 	                } finally {
 	                    try {
-	                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                            _iterator3.return();
+	                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	                            _iterator4.return();
 	                        }
 	                    } finally {
-	                        if (_didIteratorError3) {
-	                            throw _iteratorError3;
+	                        if (_didIteratorError4) {
+	                            throw _iteratorError4;
 	                        }
 	                    }
 	                }
 
-	                this.scoreboard.render(this.context, this.p1, this.p2);
+	                this.scoreboard.render(this.context, this.playerArray[0], this.playerArray[1]);
 	            }
 	        }
 	    }]);
@@ -8350,7 +8397,7 @@
 /* 86 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -8361,9 +8408,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Paddle = function () {
-	    function Paddle(boardHeight, x, color, keys) {
-	        var _this = this;
-
+	    function Paddle(boardHeight, x, color, kiColor, keys, character) {
 	        _classCallCheck(this, Paddle);
 
 	        this.height = 50;
@@ -8371,63 +8416,67 @@
 	        this.x = x;
 	        this.y = boardHeight / 2 - this.height / 2;
 	        this.color = color;
-	        this.keys = keys;
+
 	        this.speed = 5;
 	        this.score = 0;
-	        this.map = {};
-	        document.addEventListener('keydown', function (event) {
-	            return _this.keyDownListener(event, boardHeight);
-	        });
-	        document.addEventListener('keyup', function (event) {
-	            return _this.keyDownListener(event, boardHeight);
-	        });
-	        //        document.addEventListener('keyup', event => this.keyUpListener(event));
+	        this.kiColor = character.kiColor;
+	        this.keys = keys;
+	        this.character = character;
+	        this.input = { up: false, down: false };
 	    }
 
 	    _createClass(Paddle, [{
-	        key: 'keyDownListener',
-	        value: function keyDownListener(e, boardHeight) {
-	            e = e || event; // to deal with IE
-	            this.map[e.keyCode] = e.type == 'keydown';
-
-	            if (this.map[this.keys.up]) {
-	                this.moveUp();
-	            }
-	            if (this.map[this.keys.down]) {
-	                this.moveDown(boardHeight);
-	            }
-	        }
+	        key: "setHeight",
+	        value: function setHeight(array) {}
 	    }, {
-	        key: 'keyUpListener',
-	        value: function keyUpListener(e) {
-	            e = e || event; // to deal with IE
-	            delete this.map[e.keyCode];
-	        }
-	    }, {
-	        key: 'moveUp',
+	        key: "moveUp",
 	        value: function moveUp() {
+
 	            if (this.y - this.speed >= 0) {
 	                this.y -= this.speed;
 	            }
 	        }
 	    }, {
-	        key: 'moveDown',
+	        key: "moveDown",
 	        value: function moveDown(boardHeight) {
 	            if (this.y + this.height + this.speed <= boardHeight) {
 	                this.y += this.speed;
 	            }
 	        }
 	    }, {
-	        key: 'playerReset',
+	        key: "playerReset",
 	        value: function playerReset(boardHeight) {
 	            this.y = boardHeight / 2 - this.height / 2;
 	            this.score = 0;
 	        }
 	    }, {
-	        key: 'render',
+	        key: "drawCharacter",
+	        value: function drawCharacter(context) {
+	            var nextSectionStart = 0;
+	            var skin = this.character.skins.normal;
+	            for (var section in skin) {
+	                var sectionObj = skin[section];
+	                context.fillStyle = sectionObj.color;
+	                console.log(this.x, this.y + nextSectionStart, this.width, sectionObj.height);
+	                context.fillRect(this.x, this.y + nextSectionStart, this.width, sectionObj.height);
+
+	                nextSectionStart += sectionObj.height;
+	            }
+	        }
+	    }, {
+	        key: "update",
+	        value: function update(boardHeight) {
+	            if (this.input.up) {
+	                this.moveUp();
+	            }
+	            if (this.input.down) {
+	                this.moveDown(boardHeight);
+	            }
+	        }
+	    }, {
+	        key: "render",
 	        value: function render(context) {
-	            context.fillStyle = this.color;
-	            context.fillRect(this.x, this.y, this.width, this.height);
+	            this.drawCharacter(context);
 	        }
 	    }]);
 
@@ -8451,28 +8500,30 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Board = function () {
-	    function Board(height, width) {
-	        var color = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'black';
-
+	    function Board(height, width, backgrounds) {
 	        _classCallCheck(this, Board);
 
 	        this.height = height;
 	        this.width = width;
-	        this.color = color;
-	        document.getElementById('game').style.backgroundImage = 'url(http://localhost:3000/assets/images/background-1.png)';
+	        this.backgrounds = backgrounds;
 	    }
 
 	    _createClass(Board, [{
-	        key: 'drawBoard',
-	        value: function drawBoard(context) {
+	        key: 'setBackground',
+	        value: function setBackground(id, bgIndex) {
+	            document.getElementById(id).style.backgroundImage = 'url(' + this.backgrounds[bgIndex];
+	        }
+	    }, {
+	        key: 'clearBoard',
+	        value: function clearBoard(context) {
 	            context.clearRect(0, 0, this.width, this.height);
 	        }
 	    }, {
 	        key: 'drawLine',
 	        value: function drawLine(context) {
-	            context.setLineDash([20, 10]);
+	            context.setLineDash([10, 10]);
 	            context.strokeStyle = 'blue';
-	            context.lineWidth = 5;
+	            context.lineWidth = 2;
 
 	            context.beginPath();
 	            context.moveTo(this.width / 2, 0);
@@ -8482,7 +8533,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render(context) {
-	            this.drawBoard(context);
+	            this.clearBoard(context);
 	            this.drawLine(context);
 	        }
 	    }]);
@@ -8508,15 +8559,17 @@
 
 	var Ball = function () {
 	    function Ball(y, x, radius, color) {
+	        var speed = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5;
+
 	        _classCallCheck(this, Ball);
 
 	        this.y = y;
 	        this.x = x;
 	        this.vx = Math.random() < 0.5 ? -1 : 1;
 	        this.vy = Math.random() < 0.5 ? -.25 : .25;
+	        this.speed = speed;
 	        this.radius = radius;
 	        this.color = color;
-	        this.speed = 5;
 	    }
 
 	    _createClass(Ball, [{
@@ -8557,6 +8610,7 @@
 	            if (this.x + this.radius >= p2.x && this.x + this.radius <= p2.x + p2.width) {
 	                if (this.y >= p2.y && this.y <= p2.y + p2.height) {
 	                    this.x = p2.x - this.radius;
+	                    this.color = p2.kiColor;
 	                    var _snd2 = new Audio("../../sounds/pong-02.wav");
 	                    _snd2.play();
 	                    this.vx *= -1;
@@ -8566,6 +8620,7 @@
 	            if (this.x - this.radius <= p1.x + p1.width && this.x - this.radius >= p1.x) {
 	                if (this.y >= p1.y && this.y <= p1.y + p1.height) {
 	                    this.x = p1.x + p1.width + this.radius;
+	                    this.color = p1.kiColor;
 	                    var snd = new Audio("../../sounds/pong-02.wav");
 	                    snd.play();
 	                    this.vx *= -1;
@@ -8598,7 +8653,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	   value: true
+	    value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -8606,32 +8661,32 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var ScoreBoard = function () {
-	   function ScoreBoard(y, x, color) {
-	      _classCallCheck(this, ScoreBoard);
+	    function ScoreBoard(y, x, color) {
+	        _classCallCheck(this, ScoreBoard);
 
-	      this.y = y;
-	      this.x = x;
-	      this.color = color;
-	      this.fontSize = '12px';
-	      this.font = 'Helvetica';
-	   }
+	        this.y = y;
+	        this.x = x;
+	        this.color = color;
+	        this.fontSize = '12px';
+	        this.font = 'Helvetica';
+	    }
 
-	   _createClass(ScoreBoard, [{
-	      key: 'printText',
-	      value: function printText(context, text) {
-	         context.fillStyle = this.color;
-	         context.font = this.fontSize + ' ' + this.font;
-	         var scoreWidth = context.measureText(text).width;
-	         context.fillText(text, this.x - scoreWidth / 2, this.y);
-	      }
-	   }, {
-	      key: 'render',
-	      value: function render(context, p1, p2) {
-	         this.printText(context, 'P1: ' + p1.score + '     P2: ' + p2.score);
-	      }
-	   }]);
+	    _createClass(ScoreBoard, [{
+	        key: 'printText',
+	        value: function printText(context, text) {
+	            context.fillStyle = this.color;
+	            context.font = this.fontSize + ' ' + this.font;
+	            var scoreWidth = context.measureText(text).width;
+	            context.fillText(text, this.x - scoreWidth / 2, this.y);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render(context, p1, p2) {
+	            this.printText(context, 'P1: ' + p1.score + '     P2: ' + p2.score);
+	        }
+	    }]);
 
-	   return ScoreBoard;
+	    return ScoreBoard;
 	}();
 
 	exports.default = ScoreBoard;
@@ -8686,6 +8741,149 @@
 
 	var gameVariables = exports.gameVariables = {
 	    pointsToWin: 10
+	};
+
+	var boardVariables = exports.boardVariables = {
+	    backgrounds: ['assets/images/background-1.png', 'assets/images/background-2.jpg', 'assets/images/background-3.gif', 'assets/images/background-4.png']
+	};
+
+	var characterVariables = exports.characterVariables = {
+	    pongku: {
+	        kiColor: 'blue',
+	        ballSpeedMultiplier: 1,
+	        moveSpeedMultiplier: 1,
+	        skins: {
+	            normal: {
+	                hair: {
+	                    height: 7,
+	                    color: 'yellow'
+	                },
+
+	                face: {
+	                    height: 5,
+	                    color: 'LightSalmon'
+	                },
+
+	                body: {
+	                    height: 20,
+	                    color: 'DarkOrange'
+	                },
+
+	                pants: {
+	                    height: 20,
+	                    color: 'blue'
+	                },
+
+	                feet: {
+	                    height: 2,
+	                    color: 'black'
+	                }
+	            }
+	        }
+	    },
+
+	    pongolo: {
+	        kiColor: 'white',
+	        ballSpeedMultiplier: 1,
+	        moveSpeedMultiplier: 1,
+	        skins: {
+	            normal: {
+	                hair: {
+	                    height: 7,
+	                    color: 'white'
+	                },
+
+	                face: {
+	                    height: 5,
+	                    color: 'green'
+	                },
+
+	                body: {
+	                    height: 20,
+	                    color: 'white'
+	                },
+
+	                pants: {
+	                    height: 20,
+	                    color: 'purple'
+	                },
+
+	                feet: {
+	                    height: 2,
+	                    color: 'brown'
+	                }
+	            }
+	        }
+	    },
+
+	    majinPoong: {
+	        kiColor: 'darkPink',
+	        ballSpeedMultiplier: 1.1,
+	        moveSpeedMultiplier: 1,
+	        skins: {
+	            normal: {
+	                hair: {
+	                    height: 7,
+	                    color: 'pink'
+	                },
+
+	                face: {
+	                    height: 5,
+	                    color: 'pink'
+	                },
+
+	                body: {
+	                    height: 20,
+	                    color: 'pink'
+	                },
+
+	                pants: {
+	                    height: 20,
+	                    color: 'white'
+	                },
+
+	                feet: {
+	                    height: 2,
+	                    color: 'brown'
+	                }
+	            }
+	        }
+	    },
+
+	    pongza: {
+	        kiColor: 'red',
+	        ballSpeedMultiplier: 1,
+	        moveSpeedMultiplier: 1.1,
+
+	        skins: {
+	            normal: {
+	                hair: {
+	                    height: 7,
+	                    color: 'purple'
+	                },
+
+	                face: {
+	                    height: 5,
+	                    color: 'white'
+	                },
+
+	                body: {
+	                    height: 5,
+	                    color: 'purple'
+	                },
+
+	                pants: {
+	                    height: 20,
+	                    color: 'white'
+	                },
+
+	                feet: {
+	                    height: 2,
+	                    color: 'white'
+	                }
+	            }
+	        }
+	    }
 	};
 
 /***/ }
