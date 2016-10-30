@@ -9,5 +9,9 @@ export const player2Keys = {
 }
 
 export const gameKeys = {
-    reset:32
+    reset: 32,
+}
+
+export const boardKeys = {
+    map: [49, 50, 51, 52]
 }

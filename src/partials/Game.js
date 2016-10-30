@@ -3,13 +3,14 @@ import Board from './Board';
 import Ball from './Ball';
 import Scoreboard from './Scoreboard';
 
-import { player1Keys, player2Keys, gameKeys } from './keys';
+import { player1Keys, player2Keys, gameKeys, boardKeys } from './keys';
 import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables } from './variables';
 
 
 export default class Game {
     constructor(id) {
-        const canvas = document.getElementById(id);
+        this.id = id;
+        const canvas = document.getElementById(this.id);
         this.context = canvas.getContext('2d');
         this.height = canvas.height;
         this.width = canvas.width;
@@ -45,6 +46,10 @@ export default class Game {
             else if (!this.previousKeys[key]) {
                 this.spawnBall();
             }
+        }
+
+        if (boardKeys.map.includes(key) && (!this.previousKeys[key])) {
+            this.board.setBackground(this.id, boardKeys.map.indexOf(key));
         }
 
         // run through all players and check if one of their event keys was pressed

@@ -10,10 +10,14 @@ export default class Ball {
 
     }
 
+    playSound(file) {
+        let snd = new Audio(file);
+        snd.play();
+    }
+
     playerScore(player) {
         player.score++;
-        let snd = new Audio("pong/sounds/pong-03.wav");
-        snd.play();
+        this.playSound("pong/sounds/pong-03.wav");
     }
 
     ballReset(boardHeight, boardWidth) {
@@ -37,16 +41,15 @@ export default class Ball {
         if (this.y - this.radius <= 0 || this.y + this.radius >= boardHeight) {
             this.vy *= -1;
 
-            let snd = new Audio("pong/sounds/pong-01.wav");
-            snd.play();
+            this.playSound("pong/sounds/pong-01.wav");
         }
 
         if (this.x + this.radius >= p2.x && this.x + this.radius <= p2.x + p2.width) {
             if (this.y >= p2.y && this.y <= p2.y + p2.height) {
                 this.x = p2.x - this.radius;
+
                 this.color = p2.kiColor;
-                let snd = new Audio("pong/sounds/pong-02.wav");
-                snd.play();
+                this.playSound("pong/sounds/pong-02.wav");
                 this.vx *= -1;
             }
         }
@@ -54,9 +57,9 @@ export default class Ball {
         if (this.x - this.radius <= p1.x + p1.width && this.x - this.radius >= p1.x) {
             if (this.y >= p1.y && this.y <= p1.y + p1.height) {
                 this.x = p1.x + p1.width + this.radius;
+
                 this.color = p1.kiColor;
-                var snd = new Audio("pong/sounds/pong-02.wav");
-                snd.play();
+                this.playSound("pong/sounds/pong-02.wav");
                 this.vx *= -1;
             }
         }
