@@ -12,7 +12,7 @@ export default class Ball {
 
     playerScore(player) {
         player.score++;
-        let snd = new Audio("../sounds/pong-03.wav");
+        let snd = new Audio("sounds/pong-03.wav");
         snd.play();
     }
 
@@ -37,7 +37,7 @@ export default class Ball {
         if (this.y - this.radius <= 0 || this.y + this.radius >= boardHeight) {
             this.vy *= -1;
 
-            let snd = new Audio("../sounds/pong-01.wav");
+            let snd = new Audio("sounds/pong-01.wav");
             snd.play();
         }
 
@@ -45,7 +45,7 @@ export default class Ball {
             if (this.y >= p2.y && this.y <= p2.y + p2.height) {
                 this.x = p2.x - this.radius;
                 this.color = p2.kiColor;
-                let snd = new Audio("../sounds/pong-02.wav");
+                let snd = new Audio("sounds/pong-02.wav");
                 snd.play();
                 this.vx *= -1;
             }
@@ -55,7 +55,7 @@ export default class Ball {
             if (this.y >= p1.y && this.y <= p1.y + p1.height) {
                 this.x = p1.x + p1.width + this.radius;
                 this.color = p1.kiColor;
-                var snd = new Audio("../sounds/pong-02.wav");
+                var snd = new Audio("sounds/pong-02.wav");
                 snd.play();
                 this.vx *= -1;
             }
