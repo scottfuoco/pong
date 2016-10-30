@@ -40,8 +40,6 @@ export default class Paddle {
         for (let section in skin) {
             let sectionObj = skin[section];
             context.fillStyle = sectionObj.color;
-            console.log(this.x, this.y + nextSectionStart,
-                this.width, sectionObj.height)
             context.fillRect(this.x, this.y + nextSectionStart,
                 this.width, sectionObj.height);
 
