@@ -8457,7 +8457,6 @@
 	            for (var section in skin) {
 	                var sectionObj = skin[section];
 	                context.fillStyle = sectionObj.color;
-	                console.log(this.x, this.y + nextSectionStart, this.width, sectionObj.height);
 	                context.fillRect(this.x, this.y + nextSectionStart, this.width, sectionObj.height);
 
 	                nextSectionStart += sectionObj.height;
@@ -8576,7 +8575,7 @@
 	        key: "playerScore",
 	        value: function playerScore(player) {
 	            player.score++;
-	            var snd = new Audio("../../sounds/pong-03.wav");
+	            var snd = new Audio("../sounds/pong-03.wav");
 	            snd.play();
 	        }
 	    }, {
