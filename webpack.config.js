@@ -38,7 +38,7 @@ module.exports = {
         loader: 'file?name=public/fonts/[name].[ext]'
       },
       {
-        test: /\.(gif|png|jpe?g)$/,
+        test: /\.(gif|png|jpe?g|wav|mp3)$/,
         loader: 'url-loader'
       }
     ]
