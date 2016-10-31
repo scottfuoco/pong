@@ -7,7 +7,7 @@ export const player1Keys = {
 export const player2Keys = {
     up: 38,
     down: 40,
-    fire: 80
+    fire: 37
 }
 
 export const gameKeys = {
@@ -15,5 +15,5 @@ export const gameKeys = {
 }
 
 export const boardKeys = {
-    map: [49, 50, 51, 52]
+    map: [49, 50, 51]
 }

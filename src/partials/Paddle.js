@@ -1,5 +1,5 @@
 export default class Paddle {
-    constructor(boardHeight, x, keys, character, kiVX,kiVY) {
+    constructor(boardHeight, x, keys, character, kiVX, kiVY) {
         this.height = 50;
         this.width = 5;
         this.x = x;
@@ -21,7 +21,7 @@ export default class Paddle {
     setHeight(array) {
 
     }
-    
+
     moveUp() {
 
         if (this.y - this.speed >= 0) {
@@ -36,6 +36,7 @@ export default class Paddle {
     playerReset(boardHeight) {
         this.y = (boardHeight / 2) - (this.height / 2);
         this.score = 0;
+        this.kiAttacksLeft = this.kiAttacks;
     }
 
     drawCharacter(context) {

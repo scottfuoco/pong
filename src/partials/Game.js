@@ -15,19 +15,20 @@ export default class Game {
         this.height = canvas.height;
         this.width = canvas.width;
         this.gameOver = false;
+        this.ballHits = 0;
 
         this.keys = gameKeys;
 
         this.board = new Board(this.height, this.width, boardVariables.backgrounds);
-        this.board.setBackground(id, 3);
+        this.board.setBackground(id, 0);
 
         this.playerArray = [];
         this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, player1Keys, characterVariables.pongku, player1Variables.kiVX, player1Variables.kiVY));
         this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, player2Keys, characterVariables.pongolo, player2Variables.kiVX, player2Variables.kiVY));
 
         this.ballArray = [];
-        this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color, ballVariables.speed, ballVariables.vx, ballVariables.vy, false));
-        this.scoreboard = new Scoreboard(10, this.width / 2, '#FF0');
+        this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color, ballVariables.speed, ballVariables.vx, ballVariables.vy, false)); 1
+        this.scoreboard = new Scoreboard(10, this.width / 2, '#42f445');
 
         document.addEventListener('keydown', ev => { return this.keyListener(ev, ev.keyCode, true); }, false);
         document.addEventListener('keyup', ev => { return this.keyListener(ev, ev.keyCode, false); }, false);
@@ -60,7 +61,6 @@ export default class Game {
 
         for (let player of this.playerArray) {
             if (player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
-                console.log(player.kiVX);
                 this.ballArray.push(new Ball(player.y + (player.height / 2),
                     player.x + player.width * player.kiVX + ballVariables.kiRadius * player.kiVX + player.kiVX,
                     ballVariables.kiRadius,
@@ -88,7 +88,7 @@ export default class Game {
         this.playerArray[0].playerReset(this.height);
         this.playerArray[1].playerReset(this.height);
 
-        this.ballArray.splice(1);
+        this.ballArray.splice(0, 1);
         for (let ball of this.ballArray) {
             ball.ballReset(this.height, this.width);
         }
@@ -102,6 +102,10 @@ export default class Game {
         this.ballArray.forEach((ball, index) => {
             if (ball.x - ball.radius <= 0) {
                 ball.playerScore(this.playerArray[1]);
+                this.playerArray.forEach(player => {
+                    player.kiAttacksLeft = player.kiAttacks;
+                    player.speed = 6;
+                });
                 if (ball.isKi) {
                     this.ballArray.splice(index, 1);
                 }
@@ -110,6 +114,10 @@ export default class Game {
 
             if (ball.x + ball.radius >= this.width) {
                 ball.playerScore(this.playerArray[0]);
+                this.playerArray.forEach(player => {
+                    player.kiAttacksLeft = player.kiAttacks;
+                    player.speed = 6;
+                });
                 if (ball.isKi) {
                     this.ballArray.splice(index, 1);
                 }
@@ -123,7 +131,6 @@ export default class Game {
 
             if (ball.x + ball.radius >= this.playerArray[1].x && ball.x + ball.radius <= this.playerArray[1].x + this.playerArray[1].width) {
                 if (ball.y >= this.playerArray[1].y && ball.y <= this.playerArray[1].y + this.playerArray[1].height) {
-                    console.log(ball.isKi)
                     if (ball.isKi) {
                         this.ballArray.splice(index, 1);
                     }
@@ -133,6 +140,7 @@ export default class Game {
                     ball.color = this.playerArray[1].kiColor;
                     ball.playSound("pong/sounds/pong-02.wav");
                     ball.vx *= -1;
+                    this.ballHits++;
                 }
             }
 
@@ -147,6 +155,7 @@ export default class Game {
                     ball.color = this.playerArray[0].kiColor;
                     ball.playSound("pong/sounds/pong-02.wav");
                     ball.vx *= -1;
+                    this.ballHits++;
                 }
             }
 
@@ -173,6 +182,26 @@ export default class Game {
                 }*/
         this.playerArray[0].update(this.height);
         this.playerArray[1].update(this.height);
+
+        switch (this.ballHits) {
+            case 6:
+                this.playerArray[0].speed = 4;
+                this.playerArray[1].speed = 4;
+                break;
+            case 8:
+                this.playerArray[0].speed = 3;
+                this.playerArray[1].speed = 3;
+                break;
+            case 10:
+                this.playerArray[0].speed = 2;
+                this.playerArray[1].speed = 2;
+                break;
+            case 12:
+                this.playerArray[0].speed = 1;
+                this.playerArray[1].speed = 1;
+                break;
+        }
+
     }
 
     render() {

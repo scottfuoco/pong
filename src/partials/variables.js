@@ -33,10 +33,8 @@ export const gameVariables = {
 
 export const boardVariables = {
     backgrounds: [
-        'assets/images/background-1.png',
+        'assets/images/background-1.jpg',
         'assets/images/background-2.jpg',
-        'assets/images/background-3.gif',
-        'assets/images/background-4.png'
     ]
 }
 
