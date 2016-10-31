@@ -7769,6 +7769,7 @@
 	(function gameLoop() {
 
 		if (!game.gameOver) {
+			game.collision();
 			game.update();
 			game.render();
 		}
@@ -7811,7 +7812,7 @@
 
 
 	// module
-	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(79) + ");\n    src: url(" + __webpack_require__(79) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(80) + ") format('woff2'),\n         url(" + __webpack_require__(81) + ") format('woff'),\n         url(" + __webpack_require__(82) + ") format('truetype'),\n         url(" + __webpack_require__(83) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n\n}\nh1 {\n   margin-top: 20px;\n}\n\n#game {\n   background-color: black;\n   background-size: cover;\n   display: block;\n   height: 80%;\n   margin: 20px auto;\n   width: 80%;\n}\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 512px;\n}\n", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n   margin: 0;\n   padding: 0;\n   border: 0;\n   font-size: 100%;\n   font: inherit;\n   vertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n   display: block;\n}\nbody {\n   line-height: 1;\n}\n\nol, ul {\n   list-style: none;\n}\nblockquote, q {\n   quotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n   content: '';\n   content: none;\n}\ntable {\n   border-collapse: collapse;\n   border-spacing: 0;\n}\n\n/* Game Styles */\n\n@font-face {\n    font-family: 'PressStart2P Web';\n    src: url(" + __webpack_require__(79) + ");\n    src: url(" + __webpack_require__(79) + "?#iefix) format('embedded-opentype'),\n         url(" + __webpack_require__(80) + ") format('woff2'),\n         url(" + __webpack_require__(81) + ") format('woff'),\n         url(" + __webpack_require__(82) + ") format('truetype'),\n         url(" + __webpack_require__(83) + "#press_start_2pregular) format('svg');\n    font-weight: normal;\n    font-style: normal;\n}\n\nhtml{\n    font-size: 16px;\n}\nbody {\n   font-family: 'PressStart2P Web', monospace;\n   margin: 0 auto;\n   text-align: center;\n    height: 100vh;\n    background: radial-gradient(ellipse at center, rgba(219,132,26,1) 22%, rgba(219,132,26,1) 35%, rgba(219,132,26,1) 36%, rgba(219,132,26,1) 50%, rgba(219,132,26,1) 61%, rgba(230,136,21,1) 65%, rgba(255,145,10,1) 74%) no-repeat;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\nh1 {  \n    font-size: 2rem;\n}\n\n#game {\n   background-color: black;\n   background-size: cover;\n   background-repeat: no-repeat;\n   display: block;\n   height: 400px;\n   width: 800px;\n   margin: 20px auto;\n   cursor: none;\n   border: 5px solid blue;\n}\n\n.players {\n   display: inline-flex;\n   justify-content: space-between;\n   text-align: center;\n   width: 800px;\n}\n\n.players h2{\n    padding: 5px 0;\n    font-weight: bold;\n}\n\n.players li{\n    padding: 5px 0;\n}\n", ""]);
 
 	// exports
 
@@ -8206,16 +8207,15 @@
 	        this.keys = _keys.gameKeys;
 
 	        this.board = new _Board2.default(this.height, this.width, _variables.boardVariables.backgrounds);
-	        this.board.setBackground(id, 3);
+	        this.board.setBackground(id, 0);
 
 	        this.playerArray = [];
-	        this.playerArray.push(new _Paddle2.default(this.height, _variables.paddleVariables.distFromEdge, 'white', 'red', _keys.player1Keys, _variables.characterVariables.pongku));
-
-	        this.playerArray.push(new _Paddle2.default(this.height, this.width - _variables.paddleVariables.distFromEdge, 'white', 'blue', _keys.player2Keys, _variables.characterVariables.pongolo));
+	        this.playerArray.push(new _Paddle2.default(this.height, _variables.paddleVariables.distFromEdge, _keys.player1Keys, _variables.characterVariables.pongku, _variables.player1Variables.kiVX, _variables.player1Variables.kiVY));
+	        this.playerArray.push(new _Paddle2.default(this.height, this.width - _variables.paddleVariables.distFromEdge, _keys.player2Keys, _variables.characterVariables.pongolo, _variables.player2Variables.kiVX, _variables.player2Variables.kiVY));
 
 	        this.ballArray = [];
-	        this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color));
-	        this.scoreboard = new _Scoreboard2.default(10, this.width / 2, '#FF0');
+	        this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color, _variables.ballVariables.speed, _variables.ballVariables.vx, _variables.ballVariables.vy, false));1;
+	        this.scoreboard = new _Scoreboard2.default(10, this.width / 2, '#42f445');
 
 	        document.addEventListener('keydown', function (ev) {
 	            return _this.keyListener(ev, ev.keyCode, true);
@@ -8228,6 +8228,12 @@
 	    }
 
 	    _createClass(Game, [{
+	        key: 'playSound',
+	        value: function playSound(file) {
+	            var snd = new Audio(file);
+	            snd.play();
+	        }
+	    }, {
 	        key: 'keyListener',
 	        value: function keyListener(ev, key, pressed) {
 	            if (this.keys.reset === key) {
@@ -8245,6 +8251,7 @@
 	            // run through all players and check if one of their event keys was pressed
 	            // if it was set that input on that player to true.
 	            // the action will be called in the update() for that player/
+
 	            var _iteratorNormalCompletion = true;
 	            var _didIteratorError = false;
 	            var _iteratorError = undefined;
@@ -8253,8 +8260,11 @@
 	                for (var _iterator = this.playerArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                    var player = _step.value;
 
-	                    if (player.key.fire === key) {
-	                        this.ballArray.push(new _Ball2.default(player.y + player.height / 2, player.x + player.width + _variables.ballVariables.kiRadius, _variables.ballVariables.kiRadius, player.kiColor));
+	                    if (player.keys.fire === key && player.kiAttacksLeft >= 0 && !this.previousKeys[key]) {
+	                        this.ballArray.push(new _Ball2.default(player.y + player.height / 2, player.x + player.width * player.kiVX + _variables.ballVariables.kiRadius * player.kiVX + player.kiVX, _variables.ballVariables.kiRadius, player.kiColor, _variables.ballVariables.speed, player.kiVX, player.kiVY, true));
+	                        player.kiAttacksLeft--;
+
+	                        this.playSound("pong/sounds/kiBlast.wav");
 	                    }
 	                    if (player.keys.up === key) {
 	                        player.input.up = pressed;
@@ -8286,6 +8296,7 @@
 	            this.playerArray[0].playerReset(this.height);
 	            this.playerArray[1].playerReset(this.height);
 
+	            this.ballArray.splice(1);
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
 	            var _iteratorError2 = undefined;
@@ -8317,6 +8328,65 @@
 	            this.ballArray.push(new _Ball2.default(this.height / 2, this.width / 2, _variables.ballVariables.radius, _variables.ballVariables.color));
 	        }
 	    }, {
+	        key: 'collision',
+	        value: function collision() {
+	            var _this2 = this;
+
+	            this.ballArray.forEach(function (ball, index) {
+	                if (ball.x - ball.radius <= 0) {
+	                    ball.playerScore(_this2.playerArray[1]);
+	                    if (ball.isKi) {
+	                        _this2.ballArray.splice(index, 1);
+	                    }
+	                    ball.ballReset(_this2.height, _this2.width);
+	                }
+
+	                if (ball.x + ball.radius >= _this2.width) {
+	                    ball.playerScore(_this2.playerArray[0]);
+	                    if (ball.isKi) {
+	                        _this2.ballArray.splice(index, 1);
+	                    }
+	                    ball.ballReset(_this2.height, _this2.width);
+	                }
+
+	                if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= _this2.height) {
+	                    ball.vy *= -1;
+	                    ball.playSound("pong/sounds/pong-01.wav");
+	                }
+
+	                if (ball.x + ball.radius >= _this2.playerArray[1].x && ball.x + ball.radius <= _this2.playerArray[1].x + _this2.playerArray[1].width) {
+	                    if (ball.y >= _this2.playerArray[1].y && ball.y <= _this2.playerArray[1].y + _this2.playerArray[1].height) {
+	                        if (ball.isKi) {
+	                            _this2.ballArray.splice(index, 1);
+	                        }
+
+	                        ball.x = _this2.playerArray[1].x - ball.radius;
+
+	                        ball.color = _this2.playerArray[1].kiColor;
+	                        ball.playSound("pong/sounds/pong-02.wav");
+	                        ball.vx *= -1;
+	                    }
+	                }
+
+	                if (ball.x - ball.radius <= _this2.playerArray[0].x + _this2.playerArray[0].width && ball.x - ball.radius >= _this2.playerArray[0].x) {
+	                    if (ball.y >= _this2.playerArray[0].y && ball.y <= _this2.playerArray[0].y + _this2.playerArray[0].height) {
+	                        if (ball.isKi) {
+	                            _this2.ballArray.splice(index, 1);
+	                        }
+
+	                        ball.x = _this2.playerArray[0].x + _this2.playerArray[0].width + ball.radius;
+
+	                        ball.color = _this2.playerArray[0].kiColor;
+	                        ball.playSound("pong/sounds/pong-02.wav");
+	                        ball.vx *= -1;
+	                    }
+	                }
+
+	                ball.x += ball.vx * ball.speed;
+	                ball.y += ball.vy * ball.speed;
+	            });
+	        }
+	    }, {
 	        key: 'update',
 	        value: function update() {
 	            if (this.playerArray[0].score >= _variables.gameVariables.pointsToWin || this.playerArray[1].score >= _variables.gameVariables.pointsToWin) {
@@ -8331,31 +8401,9 @@
 	                this.gameOver = true;
 	            }
 
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-
-	            try {
-	                for (var _iterator3 = this.ballArray[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var ball = _step3.value;
-
-	                    ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-
+	            /*        for (let ball of this.ballArray) {
+	                        ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
+	                    }*/
 	            this.playerArray[0].update(this.height);
 	            this.playerArray[1].update(this.height);
 	        }
@@ -8366,27 +8414,27 @@
 	                this.board.render(this.context);
 	                this.playerArray[0].render(this.context);
 	                this.playerArray[1].render(this.context);
-	                var _iteratorNormalCompletion4 = true;
-	                var _didIteratorError4 = false;
-	                var _iteratorError4 = undefined;
+	                var _iteratorNormalCompletion3 = true;
+	                var _didIteratorError3 = false;
+	                var _iteratorError3 = undefined;
 
 	                try {
-	                    for (var _iterator4 = this.ballArray[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	                        var ball = _step4.value;
+	                    for (var _iterator3 = this.ballArray[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	                        var ball = _step3.value;
 
 	                        ball.render(this.context);
 	                    }
 	                } catch (err) {
-	                    _didIteratorError4 = true;
-	                    _iteratorError4 = err;
+	                    _didIteratorError3 = true;
+	                    _iteratorError3 = err;
 	                } finally {
 	                    try {
-	                        if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	                            _iterator4.return();
+	                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	                            _iterator3.return();
 	                        }
 	                    } finally {
-	                        if (_didIteratorError4) {
-	                            throw _iteratorError4;
+	                        if (_didIteratorError3) {
+	                            throw _iteratorError3;
 	                        }
 	                    }
 	                }
@@ -8416,20 +8464,21 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var Paddle = function () {
-	    function Paddle(boardHeight, x, color, kiColor, keys, character) {
+	    function Paddle(boardHeight, x, keys, character, kiVX, kiVY) {
 	        _classCallCheck(this, Paddle);
 
 	        this.height = 50;
 	        this.width = 5;
 	        this.x = x;
 	        this.y = boardHeight / 2 - this.height / 2;
-	        this.color = color;
 
 	        this.speed = 5;
 	        this.score = 0;
 	        this.kiColor = character.kiColor;
 	        this.kiAttacks = character.kiAttacks;
 	        this.kiAttacksLeft = this.kiAttacks;
+	        this.kiVX = kiVX;
+	        this.kiVY = kiVY;
 	        this.keys = keys;
 	        this.character = character;
 	        this.input = { up: false, down: false };
@@ -8569,16 +8618,20 @@
 	var Ball = function () {
 	    function Ball(y, x, radius, color) {
 	        var speed = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5;
+	        var vx = arguments[5];
+	        var vy = arguments[6];
+	        var isKi = arguments[7];
 
 	        _classCallCheck(this, Ball);
 
 	        this.y = y;
 	        this.x = x;
-	        this.vx = Math.random() < 0.5 ? -1 : 1;
-	        this.vy = Math.random() < 0.5 ? -.25 : .25;
+	        this.vx = vx || (Math.random() < 0.5 ? -1 : 1);
+	        this.vy = isKi ? 0 : Math.random() < 0.5 ? -.25 : .25;
 	        this.speed = speed;
 	        this.radius = radius;
 	        this.color = color;
+	        this.isKi = isKi;
 	    }
 
 	    _createClass(Ball, [{
@@ -8600,48 +8653,6 @@
 	            this.y = boardHeight / 2;
 	            this.vy = Math.random() < 0.5 ? -.25 : .25;
 	            this.vx *= -1;
-	        }
-	    }, {
-	        key: "update",
-	        value: function update(boardHeight, boardWidth, p1, p2) {
-	            if (this.x - this.radius <= 0) {
-	                this.playerScore(p2);
-	                this.ballReset(boardHeight, boardWidth);
-	            }
-
-	            if (this.x + this.radius >= boardWidth) {
-	                this.playerScore(p1);
-	                this.ballReset(boardHeight, boardWidth);
-	            }
-
-	            if (this.y - this.radius <= 0 || this.y + this.radius >= boardHeight) {
-	                this.vy *= -1;
-
-	                this.playSound("pong/sounds/pong-01.wav");
-	            }
-
-	            if (this.x + this.radius >= p2.x && this.x + this.radius <= p2.x + p2.width) {
-	                if (this.y >= p2.y && this.y <= p2.y + p2.height) {
-	                    this.x = p2.x - this.radius;
-
-	                    this.color = p2.kiColor;
-	                    this.playSound("pong/sounds/pong-02.wav");
-	                    this.vx *= -1;
-	                }
-	            }
-
-	            if (this.x - this.radius <= p1.x + p1.width && this.x - this.radius >= p1.x) {
-	                if (this.y >= p1.y && this.y <= p1.y + p1.height) {
-	                    this.x = p1.x + p1.width + this.radius;
-
-	                    this.color = p1.kiColor;
-	                    this.playSound("pong/sounds/pong-02.wav");
-	                    this.vx *= -1;
-	                }
-	            }
-
-	            this.x += this.vx * this.speed;
-	            this.y += this.vy * this.speed;
 	        }
 	    }, {
 	        key: "render",
@@ -8722,7 +8733,7 @@
 	var player2Keys = exports.player2Keys = {
 	    up: 38,
 	    down: 40,
-	    fire: 47
+	    fire: 37
 	};
 
 	var gameKeys = exports.gameKeys = {
@@ -8730,7 +8741,7 @@
 	};
 
 	var boardKeys = exports.boardKeys = {
-	    map: [49, 50, 51, 52]
+	    map: [49, 50, 51]
 	};
 
 /***/ },
@@ -8748,13 +8759,25 @@
 	var ballVariables = exports.ballVariables = {
 	    radius: 5,
 	    kiRadius: 2,
+	    speed: 5,
+	    vx: 0,
+	    vy: 0,
 	    color: 'red'
 	};
 
 	var paddleVariables = exports.paddleVariables = {
-	    distFromEdge: 35
+	    distFromEdge: 20
 	};
 
+	var player1Variables = exports.player1Variables = {
+	    kiVX: 1,
+	    kiVY: 0
+	};
+
+	var player2Variables = exports.player2Variables = {
+	    kiVX: -1,
+	    kiVY: 0
+	};
 	var scoreboardVariables = exports.scoreboardVariables = {
 	    color: 'white;'
 	};
@@ -8764,7 +8787,7 @@
 	};
 
 	var boardVariables = exports.boardVariables = {
-	    backgrounds: ['assets/images/background-1.png', 'assets/images/background-2.jpg', 'assets/images/background-3.gif', 'assets/images/background-4.png']
+	    backgrounds: ['assets/images/background-1.jpg', 'assets/images/background-2.jpg']
 	};
 
 	var characterVariables = exports.characterVariables = {
