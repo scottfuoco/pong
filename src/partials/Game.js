@@ -53,6 +53,7 @@ export default class Game {
         // if it was set that input on that player to true.
         // the action will be called in the update() for that player/
         for (let player of this.playerArray) {
+            console.log(player.keys);
             if (player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
                 this.ballArray.push(new Ball(player.y + (player.height / 2),
                     player.x + player.width + ballVariables.kiRadius,
