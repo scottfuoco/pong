@@ -35,6 +35,11 @@ export default class Game {
         this.previousKeys = {};
     }
 
+    playSound(file) {
+        let snd = new Audio(file);
+        snd.play();
+    }
+
     keyListener(ev, key, pressed) {
         if (this.keys.reset === key) {
             if (this.gameOver) {
@@ -54,10 +59,10 @@ export default class Game {
         // the action will be called in the update() for that player/
 
         for (let player of this.playerArray) {
-            console.log(player.keys);
             if (player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
+                console.log(player.kiVX);
                 this.ballArray.push(new Ball(player.y + (player.height / 2),
-                    player.x + player.width + ballVariables.kiRadius,
+                    player.x + player.width * player.kiVX + ballVariables.kiRadius * player.kiVX + player.kiVX,
                     ballVariables.kiRadius,
                     player.kiColor,
                     ballVariables.speed,
@@ -65,6 +70,8 @@ export default class Game {
                     player.kiVY,
                     true));
                 player.kiAttacksLeft--;
+
+                this.playSound("pong/sounds/kiBlast.wav");
             }
             if (player.keys.up === key) {
                 player.input.up = pressed;
@@ -91,6 +98,63 @@ export default class Game {
         this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
     }
 
+    collision() {
+        this.ballArray.forEach((ball, index) => {
+            if (ball.x - ball.radius <= 0) {
+                ball.playerScore(this.playerArray[1]);
+                if (ball.isKi) {
+                    this.ballArray.splice(index, 1);
+                }
+                ball.ballReset(this.height, this.width);
+            }
+
+            if (ball.x + ball.radius >= this.width) {
+                ball.playerScore(this.playerArray[0]);
+                if (ball.isKi) {
+                    this.ballArray.splice(index, 1);
+                }
+                ball.ballReset(this.height, this.width);
+            }
+
+            if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= this.height) {
+                ball.vy *= -1;
+                ball.playSound("pong/sounds/pong-01.wav");
+            }
+
+            if (ball.x + ball.radius >= this.playerArray[1].x && ball.x + ball.radius <= this.playerArray[1].x + this.playerArray[1].width) {
+                if (ball.y >= this.playerArray[1].y && ball.y <= this.playerArray[1].y + this.playerArray[1].height) {
+                    console.log(ball.isKi)
+                    if (ball.isKi) {
+                        this.ballArray.splice(index, 1);
+                    }
+
+                    ball.x = this.playerArray[1].x - ball.radius;
+
+                    ball.color = this.playerArray[1].kiColor;
+                    ball.playSound("pong/sounds/pong-02.wav");
+                    ball.vx *= -1;
+                }
+            }
+
+            if (ball.x - ball.radius <= this.playerArray[0].x + this.playerArray[0].width && ball.x - ball.radius >= this.playerArray[0].x) {
+                if (ball.y >= this.playerArray[0].y && ball.y <= this.playerArray[0].y + this.playerArray[0].height) {
+                    if (ball.isKi) {
+                        this.ballArray.splice(index, 1);
+                    }
+
+                    ball.x = this.playerArray[0].x + this.playerArray[0].width + ball.radius;
+
+                    ball.color = this.playerArray[0].kiColor;
+                    ball.playSound("pong/sounds/pong-02.wav");
+                    ball.vx *= -1;
+                }
+            }
+
+            ball.x += ball.vx * ball.speed;
+            ball.y += ball.vy * ball.speed;
+        });
+    }
+
     update() {
         if (this.playerArray[0].score >= gameVariables.pointsToWin || this.playerArray[1].score >= gameVariables.pointsToWin) {
             let winner = '';
@@ -104,9 +168,9 @@ export default class Game {
             this.gameOver = true;
         }
 
-        for (let ball of this.ballArray) {
-            ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
-        }
+        /*        for (let ball of this.ballArray) {
+                    ball.update(this.height, this.width, this.playerArray[0], this.playerArray[1]);
+                }*/
         this.playerArray[0].update(this.height);
         this.playerArray[1].update(this.height);
     }

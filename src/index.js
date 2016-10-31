@@ -8,6 +8,7 @@ const fps = 30;
 (function gameLoop() {
 
 	if (!game.gameOver) {
+		game.collision();
 		game.update();
 		game.render();
 	}
