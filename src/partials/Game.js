@@ -52,7 +52,7 @@ export default class Game {
         // run through all players and check if one of their event keys was pressed
         // if it was set that input on that player to true.
         // the action will be called in the update() for that player/
-        console.log(player.keys);
+
         for (let player of this.playerArray) {
             console.log(player.keys);
             if (player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
