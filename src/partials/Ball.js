@@ -1,9 +1,9 @@
 export default class Ball {
-    constructor(y, x, radius, color, speed = 5) {
+    constructor(y, x, radius, color, speed = 5, vx, vy, isKi) {
         this.y = y;
         this.x = x;
-        this.vx = Math.random() < 0.5 ? -1 : 1;
-        this.vy = Math.random() < 0.5 ? -.25 : .25;
+        this.vx = vx || Math.random() < 0.5 ? -1 : 1;
+        this.vy = isKi ? 0 : Math.random() < 0.5 ? -.25 : .25;
         this.speed = speed;
         this.radius = radius;
         this.color = color;

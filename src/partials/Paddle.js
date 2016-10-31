@@ -1,14 +1,17 @@
 export default class Paddle {
-    constructor(boardHeight, x, color, kiColor, keys, character) {
+    constructor(boardHeight, x, keys, character, kiVX,kiVY) {
         this.height = 50;
         this.width = 5;
         this.x = x;
         this.y = (boardHeight / 2) - (this.height / 2);
-        this.color = color;
 
         this.speed = 5;
         this.score = 0;
         this.kiColor = character.kiColor;
+        this.kiAttacks = character.kiAttacks;
+        this.kiAttacksLeft = this.kiAttacks;
+        this.kiVX = kiVX;
+        this.kiVY = kiVY;
         this.keys = keys;
         this.character = character;
         this.input = { up: false, down: false };
@@ -18,6 +21,7 @@ export default class Paddle {
     setHeight(array) {
 
     }
+    
     moveUp() {
 
         if (this.y - this.speed >= 0) {

@@ -4,7 +4,7 @@ import Ball from './Ball';
 import Scoreboard from './Scoreboard';
 
 import { player1Keys, player2Keys, gameKeys, boardKeys } from './keys';
-import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables } from './variables';
+import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables, player1Variables, player2Variables} from './variables';
 
 
 export default class Game {
@@ -22,20 +22,17 @@ export default class Game {
         this.board.setBackground(id, 3);
 
         this.playerArray = [];
-        this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, 'white', 'red', player1Keys, characterVariables.pongku));
-
-        this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, 'white', 'blue', player2Keys, characterVariables.pongolo));
+        this.playerArray.push(new Paddle(this.height, paddleVariables.distFromEdge, player1Keys, characterVariables.pongku, player1Variables.kiVX, player1Variables.kiVY));
+        this.playerArray.push(new Paddle(this.height, this.width - paddleVariables.distFromEdge, player2Keys, characterVariables.pongolo, player2Variables.kiVX, player2Variables.kiVY));
 
         this.ballArray = [];
-        this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color));
+        this.ballArray.push(new Ball(this.height / 2, this.width / 2, ballVariables.radius, ballVariables.color, ballVariables.speed, ballVariables.vx, ballVariables.vy, false));
         this.scoreboard = new Scoreboard(10, this.width / 2, '#FF0');
 
         document.addEventListener('keydown', ev => { return this.keyListener(ev, ev.keyCode, true); }, false);
         document.addEventListener('keyup', ev => { return this.keyListener(ev, ev.keyCode, false); }, false);
 
         this.previousKeys = {};
-
-
     }
 
     keyListener(ev, key, pressed) {
@@ -56,6 +53,17 @@ export default class Game {
         // if it was set that input on that player to true.
         // the action will be called in the update() for that player/
         for (let player of this.playerArray) {
+            if(player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
+                this.ballArray.push(new Ball(player.y + (player.height/2),
+                 player.x + player.width + ballVariables.kiRadius,
+                 ballVariables.kiRadius,
+                 player.kiColor,
+                 ballVariables.speed,
+                 player.kiVX,
+                 player.kiVY,
+                 true));
+                 player.kiAttacksLeft--;
+            }
             if (player.keys.up === key) {
                 player.input.up = pressed;
             }
@@ -70,7 +78,8 @@ export default class Game {
         this.gameOver = false;
         this.playerArray[0].playerReset(this.height);
         this.playerArray[1].playerReset(this.height);
-
+        
+        this.ballArray.splice(1);
         for (let ball of this.ballArray) {
             ball.ballReset(this.height, this.width);
         }

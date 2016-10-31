@@ -3,13 +3,26 @@
 // Ball
 export const ballVariables = {
     radius: 5,
+    kiRadius: 2,
+    speed: 5,
+    vx: 0,
+    vy: 0,
     color: 'red'
 }
 
 export const paddleVariables = {
-    distFromEdge: 35
+    distFromEdge: 20
 }
 
+export const player1Variables = {
+    kiVX: 1,
+    kiVY: 0
+}
+
+export const player2Variables = {
+    kiVX: -1,
+    kiVY: 0
+}
 export const scoreboardVariables = {
     color: 'white;'
 }
@@ -32,6 +45,7 @@ export const characterVariables = {
         kiColor: 'blue',
         ballSpeedMultiplier: 1,
         moveSpeedMultiplier: 1,
+        kiAttacks: 3,
         skins: {
             normal: {
                 hair: {
@@ -67,6 +81,7 @@ export const characterVariables = {
         kiColor: 'white',
         ballSpeedMultiplier: 1,
         moveSpeedMultiplier: 1,
+        kiAttacks: 4,
         skins: {
             normal: {
                 hair: {
@@ -101,6 +116,7 @@ export const characterVariables = {
         kiColor: 'darkPink',
         ballSpeedMultiplier: 1.1,
         moveSpeedMultiplier: 1,
+        kiAttacks: 3,
         skins: {
             normal: {
                 hair: {
@@ -135,7 +151,7 @@ export const characterVariables = {
         kiColor: 'red',
         ballSpeedMultiplier: 1,
         moveSpeedMultiplier: 1.1,
-
+        kiAttacks: 3,
         skins: {
             normal: {
                 hair: {
