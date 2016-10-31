@@ -4,7 +4,7 @@ import Ball from './Ball';
 import Scoreboard from './Scoreboard';
 
 import { player1Keys, player2Keys, gameKeys, boardKeys } from './keys';
-import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables, player1Variables, player2Variables} from './variables';
+import { ballVariables, boardVariables, paddleVariables, scoreboardVariables, gameVariables, characterVariables, player1Variables, player2Variables } from './variables';
 
 
 export default class Game {
@@ -53,16 +53,16 @@ export default class Game {
         // if it was set that input on that player to true.
         // the action will be called in the update() for that player/
         for (let player of this.playerArray) {
-            if(player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
-                this.ballArray.push(new Ball(player.y + (player.height/2),
-                 player.x + player.width + ballVariables.kiRadius,
-                 ballVariables.kiRadius,
-                 player.kiColor,
-                 ballVariables.speed,
-                 player.kiVX,
-                 player.kiVY,
-                 true));
-                 player.kiAttacksLeft--;
+            if (player.keys.fire === key && player.kiAttacksLeft >= 0 && (!this.previousKeys[key])) {
+                this.ballArray.push(new Ball(player.y + (player.height / 2),
+                    player.x + player.width + ballVariables.kiRadius,
+                    ballVariables.kiRadius,
+                    player.kiColor,
+                    ballVariables.speed,
+                    player.kiVX,
+                    player.kiVY,
+                    true));
+                player.kiAttacksLeft--;
             }
             if (player.keys.up === key) {
                 player.input.up = pressed;
@@ -78,7 +78,7 @@ export default class Game {
         this.gameOver = false;
         this.playerArray[0].playerReset(this.height);
         this.playerArray[1].playerReset(this.height);
-        
+
         this.ballArray.splice(1);
         for (let ball of this.ballArray) {
             ball.ballReset(this.height, this.width);
